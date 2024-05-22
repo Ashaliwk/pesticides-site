@@ -82,6 +82,11 @@
             color: darkcyan;
         }
 
+        .list{
+            text-decoration:none;
+            color:black;
+        }
+
         .card .fok {
             color: gray;
             text-decoration: line-through;
@@ -297,17 +302,19 @@
                $query = mysqli_query($conn, $display);
                while($result = mysqli_fetch_array($query)){    
 ?>
-            <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="col-lg-3 col-md-6 col-sm-12 mt-sm-5">
                 <div class="card">
-                <a href="./categories.php?id=<?php echo $result['id'];?>"> <img height="300px" class="img-fluid"  src="<?php echo " data/" . $result ['limage'];?>" class="card-img-top" alt="...">
-               </a>
+                <a class="list" href="./categories.php?id=<?php echo $result['id'];?>">
+                 <img height="350px"  src="<?php echo "data/" . $result ['limage'];?>" class="card-img-top" alt="...">
+               
                     <div class="card-body">
                         <h3>
                             <?php echo $result['lname'] ?>
                         </h3>
-                        <p class="card-text text-align-center">
-                            <?php echo $result['ldisc'] ?>
-                        </p>
+                        <p class="card-text text-align-center ">
+                            <?php echo $result['ldisc'] ?> 
+                        </p> 
+                    </a>
                         <span style="color: orangered;">
                             <p>
                                 <?php echo $result['lsale'] ?>
@@ -317,8 +324,8 @@
                             <?php echo $result['lprice'] ?>
                         </span>
                         <?php echo $result['ldiscount'] ?> <br>
-            <a href="#" class="btn btn-primary mt-3">Buy Now</a>
-            <button type="button" class="btn btn-secondary mt-3 ms-1">Add to Cart</button>
+            <a href="#" type="submit" class="btn btn-primary mt-3">Buy Now</a>
+            <button type="submit" name="add_to_cart" class="btn btn-secondary mt-3 ms-1">Add to Cart</button>
                     </div>
                 </div>
             </div>
@@ -407,13 +414,12 @@
    <div class="col-lg-2 col-md-4 col-sm-12">
        <div class="card p-2">
            <img class="col-xl-10 col-lg-8 col-md-6 col-sm-12 img-fluid ">
-            <a href="./pcategory2.php?id=<?php echo $result['id'];?>"> <img height="300px" class="img-fluid"  src="<?php echo " data/" . $result ['simage'];?>" class="card-img-top" alt="...">
-               </a>
+            <a class="list" href="./pcategory2.php?id=<?php echo $result['id'];?>">
+             <img height="200px"  src="<?php echo " data/" . $result ['simage'];?>" class="card-img-top" alt="...">
           <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
             <h3> <?php echo $result['productname'] ?> </h3>
-                <span style="color: #0069c7;">
                 <h6 class="mt-2"> <?php echo $result['productdiscription'] ?> </h6>
-              </span>
+              </a>
               <div class="bod mt-2">
                   <span style="color: rgb(254, 91, 31);">
                       <h3 class="mt-2">
