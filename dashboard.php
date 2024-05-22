@@ -119,7 +119,8 @@ if(!isset($_SESSION['aid'])){
         <a href="./user.php">
             <h4 class="ten">Admin Panel <i class="fa-solid fa-user fa-2xl"></i> </h4>
         </a>
-    </div> <hr>
+    </div>
+    <hr>
 
     <div class="container cal pt-sm-5 pt-lg-5 pt-md-5">
         <h1 class="h1 mb-5 text-center">Our Latest Products</h1>
@@ -133,25 +134,29 @@ if(!isset($_SESSION['aid'])){
 ?>
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
-                    <a href="#"> <img height="50px" class="img-fluid"
-                            src="<?php echo " data/" . $result ['limage'];?>" class="card-img-top" alt="...">
+                    <a href="#"> <img height="350px" src="<?php echo " data/" . $result ['limage'];?>"
+                        class="card-img-top" alt="...">
                     </a>
                     <div class="card-body">
-                         <h3> <?php echo $result['lname'] ?><a href="delete.php?id=<?php echo $result['id']; ?>" style="display:inline;"> <i class="fa-solid fa-trash fs-4 ms-2" style="color:#0069c7;"></i> </a></h3>
+                        <h3>
+                     <?php echo $result['lname'] ?> <br>
+                     <td><a href="delete.php?id=<?php echo $result['id']; ?>"> <i class="fa-solid fa-trash fs-4 ms-2" style="color:#0069c7;"></i></a></td>
+                       <td><a href="update.php?id=<?php echo $result['id']; ?>"><i class="far fa-edit ms-3"></i></a> </td>
+                        </h3>
                         <p class="card-text text-align-center">
                             <?php echo $result['ldisc'] ?>
                         </p>
                         <span style="color: orangered;">
                             <p>
                                 <?php echo $result['lsale'] ?>
-                            </p> 
+                            </p>
                         </span>
                         <span class="fok">
                             <?php echo $result['lprice'] ?>
                         </span>
                         <?php echo $result['ldiscount'] ?> <br>
                     </div>
-                    </div>
+                </div>
             </div>
             <?php
                }    
