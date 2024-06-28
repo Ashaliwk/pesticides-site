@@ -1,3 +1,18 @@
+<?php
+session_start();
+if(isset($_SESSION['bid'])){
+    $id = $_SESSION['bid'];
+        
+    include "conn.php";
+   $cart_query = "SELECT COUNT(*) As count FROM `cart` WHERE cid = $id";
+   $run_cart_query = mysqli_query($conn, $cart_query);
+   while($output=mysqli_fetch_assoc($run_cart_query)){
+   $result = $output['count'];}
+$result = 0;
+} else {
+    header("location:login.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -107,54 +122,16 @@
                         <a class="nav-link active" href="./signup.php">Signup</a>
                     </li>
                 </ul>
-                
-                <!-- <form class="d-flex ms-lg-5 ps-lg-5">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Search</button>
-                </form> -->
             </div>
         </div>
     </nav>
-
     <?php
-include ('conn.php');
-if(isset($_POST['latestproduct'])){
-    $pname = $_POST['limage'];
-    $pimage = $_POST['lname'];
-    $pprice = $_POST['ldisc'];
-    $pquantity = $_POST['lsale'];
-    $pprice = $_POST['lprice'];
-    $pdiscount = $_POST['ldiscount'];
-
-
-    $select = "SELECT * FROM `latestproduct` WHERE  limage = '$pname'";
-    $query = mysqli_query($conn, $select);
-    if(mysqli_num_rows($query) > 0){
-      ?>
-      <script>
-         
-         alert('Product already added');
-         window.location.href = "categories.php"
-      </script>
-      <?php
-     }
-     else{
-        $insert = "INSERT INTO `latestproduct`(`limage`, `lname`, `ldisc`, `lsale`, `lprice`, `ldiscount`)
-        VALUES ('$pname','$pimage','$pprice','$pquantity', '$pprice', '$pdiscount')";
-        $sql = mysqli_query($conn, $insert);
-        header("location: categories.php");
-     }
-}
-
-?>
-
-  <?php
             
             include 'conn.php';
-            
-            $ids = $_GET['id'];
+           
+            $pid = $_GET["id"];
 
-            $showquery = "SELECT* FROM `latestproduct` WHERE id = $ids";
+            $showquery = "SELECT* FROM `latestproduct` WHERE id = $pid";
 
             $showdata = mysqli_query($conn, $showquery);
 
@@ -165,31 +142,77 @@ if(isset($_POST['latestproduct'])){
 
     <div class="container">
         <div class="row m-5">
-            <div class="col-4">
+            <div class="col-lg-3">
                 <img class="img-fluid" src="<?php echo " data/" . $row ['limage'];?>" class="card-img-top" alt="...">
             </div>
             <div class="col-lg-4 col-md-8 col-sm-12 fert">
-                <h2><?php echo $row ['lname']?></h2>
-                <i class="fa-solid fa-star fa-xs cel"></i>
-                <i class="fa-solid fa-star fa-xs cel"></i>
-                <i class="fa-solid fa-star fa-xs cel"></i>
-                <i class="fa-solid fa-star fa-xs cel"></i>
-                <i class="fa-solid fa-star fa-xs"></i>
+                <h3><?php echo $row ['lname']?></h3>
                 <span style="color: #0069c7;">
                     <h5 class="mt-2"><?php echo $row ['ldisc'] ?></h5>
                 </span>
                 <div class="bod mt-4">
                     <span style="color: rgb(254, 91, 31);">
-                        <h3 class="mt-3"><?php echo $row['lsale'] ?></h3>
+                        <h4 class="mt-3"><?php echo $row['lsale'] ?></h4>
                     </span>
                     <span style="text-decoration: line-through;"><?php echo $row['lprice'] ?></span> 
                         <?php echo $row['ldiscount'] ?>
-                    <div class="qua mt-4">
-                        <h5>product no:<?php echo $row ['id'] ?></h5>
+                        <form method="POST" enctype="multipart/form-data">
+                                    
+                        <?php
+                          if(isset($_POST['add'])){
+                             $quantity = $_POST["quantity"];
+                             $name = $row['lname'];
+                             $description = $row['ldisc'];
+                             $price = $row['lsale'];
+                             $filename = $row['limage'];
+
+                             $check_query = "SELECT * FROM `cart` WHERE `name`='$name' AND `cid`='$id'";
+                             $check_query_result = mysqli_query($conn, $check_query);
+
+                            if(mysqli_num_rows($check_query_result) > 0){
+                       ?>
+                       <script>
+                           window.location.href = "buy.php";
+                           alert("Item already exists in cart.");
+                       </script>
+                       <?php
+                }
+
+                else{
+                    $insert_query = "INSERT INTO `cart`(`pid`,`cid`, `name`, `discription`, 
+                    `price`, `image`, `quantity`) VALUES ('$pid','$id','$name',
+                    '$description','$price','$filename','$quantity')";
+
+                    $result = mysqli_query($conn, $insert_query);
+                                                        
+                    if($result){ 
+                           ?>
+                       <script>
+                           window.location.href = "buy.php";
+                           alert("Added to the cart successfully.");
+                       </script>
+                       <?php
+                       }
+                                            
+                       else{
+                           ?>
+                       <script>
+                           alert("Sorry, item was not added to the cart.");
+                       </script>
+                       <?php      
+                  }
+                }
+               }
+             ?>
+                                
+                    <div class="qua mt-2">
+                        <label for=""><h3>Quantity</h3></label>
+                        <input type="number" name="quantity" min="0" max="100" value="1">
                     </div>
                     <div class="bat mt-4">
                         <button type="submit" class="btn-lg btn-secondary ps-5 pe-5">Buy now</button>
-                        <button type="button" class="btn-lg cql ps-4 pe-4" value="Add to cart">Add to Cart</button>
+                        <button type="submit" name="add" class="btn-lg cql ps-4 pe-4">Add to Cart</button>
+                      </form>
                     </div>
                 </div>
             </div>
