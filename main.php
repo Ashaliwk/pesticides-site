@@ -1,10 +1,21 @@
+<?php
+// Define the limit_text function
+function limit_text($text, $limit) {
+    if (str_word_count($text, 0) > $limit) {
+        $words = str_word_count($text, 2);
+        $pos = array_keys($words);
+        $text = substr($text, 0, $pos[$limit]) . '...';
+    }
+    return $text;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fertilizer's</title>
+    <title>Pesticidies</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
@@ -69,13 +80,6 @@
             font-size: 20px;
         }
 
-        .cal .card {
-            border: none;
-        }
-
-        .cal .card:hover {
-            box-shadow: 2px 2px 4px gray;
-        }
 
         .cal h1 {
             text-align: center;
@@ -83,13 +87,7 @@
         }
 
         .list{
-            text-decoration:none;
-            color:black;
-        }
-
-        .card .fok {
-            color: gray;
-            text-decoration: line-through;
+            list-style: none;
         }
 
         .fla {
@@ -110,6 +108,11 @@
             padding: 17px;
             font-size: 22px;
             border-radius: 30px;
+        }
+
+        .card .fok {
+            color: gray;
+            text-decoration: line-through;
         }
 
         .lak img {
@@ -159,7 +162,7 @@
 
         @media screen and (min-width:1024px) {
         .cal {
-            margin-top: 200px;
+            margin-top: 250px;
         }
         }
 
@@ -225,8 +228,10 @@
     </style>
 
 </head>
-
 <body>
+<!-- <div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div> -->
 <header>
     <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid abc">
@@ -292,7 +297,7 @@
         </div>
     </div>
 
-    <div class="container cal pt-sm-5 pt-lg-5 pt-md-5">
+    <div class="container cal none pt-sm-5 pt-lg-0 pt-md-5">
         <h1 class="h1 mb-5">Our Latest Products</h1>
         <div class="row">
 
@@ -302,19 +307,19 @@
                $query = mysqli_query($conn, $display);
                while($result = mysqli_fetch_array($query)){    
 ?>
-            <div class="col-lg-3 col-md-6 col-sm-12 mt-sm-5">
+            <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="card">
-                <a class="list" href="./categories.php?id=<?php echo $result['id'];?>">
-                 <img height="350px"  src="<?php echo "data/" . $result ['limage'];?>" class="card-img-top" alt="...">
-               
-                    <div class="card-body">
-                        <h3>
+                <a class="list text-center" href="./categories.php?id=<?php echo $result['id'];?>"> <img height="200px" class="text-center p-2"
+                 src="<?php echo " data/" . $result ['limage'];?>" alt="...">
+                </a>    
+                <div class="card-body">
+                        <h4>
                             <?php echo $result['lname'] ?>
-                        </h3>
-                        <p class="card-text text-align-center ">
-                            <?php echo $result['ldisc'] ?> 
-                        </p> 
-                    </a>
+                        </h4>
+                        <p class="card-text text-align-center">
+              <?php echo limit_text($result['ldisc'], 8); // Adjust the limit as needed ?>
+          </p>
+
                         <span style="color: orangered;">
                             <p>
                                 <?php echo $result['lsale'] ?>
@@ -324,8 +329,9 @@
                             <?php echo $result['lprice'] ?>
                         </span>
                         <?php echo $result['ldiscount'] ?> <br>
-            <a href="#" type="submit" class="btn btn-primary mt-3">Buy Now</a>
-            <button type="submit" name="add_to_cart" class="btn btn-secondary mt-3 ms-1">Add to Cart</button>
+            <a href="./login.php" class="btn btn-primary mt-3">Buy Now</a>
+            <a href="categories.php" type="submit" class="btn btn-secondary mt-3 ms-1">Add to Cart</a>
+          
                     </div>
                 </div>
             </div>
@@ -400,7 +406,7 @@
     <table>
 
         <div class="container-fluid mt-4 none">
-            <h1 class="text-center mb-5 cat ">Categories</h1>
+            <h1 class="text-center mb-5 cat">Categories</h1>
             <div class="row d-flex mt-4">
                 <?php
             
@@ -413,13 +419,14 @@
 
    <div class="col-lg-2 col-md-4 col-sm-12">
        <div class="card p-2">
-           <img class="col-xl-10 col-lg-8 col-md-6 col-sm-12 img-fluid ">
-            <a class="list" href="./pcategory2.php?id=<?php echo $result['id'];?>">
-             <img height="200px"  src="<?php echo " data/" . $result ['simage'];?>" class="card-img-top" alt="...">
+           <img class="col-xl-10 col-lg-8 col-md-6 col-sm-12 img-fluid">
+            <a href="./pcategory2.php?id=<?php echo $result['id'];?>"> <img height="300px" class="img-fluid p-1"  src="<?php echo " data/" . $result ['simage'];?>" class="card-img-top" alt="...">
+               </a>
           <div class="col-lg-12 col-md-12 col-sm-12 mt-3">
             <h3> <?php echo $result['productname'] ?> </h3>
-                <h6 class="mt-2"> <?php echo $result['productdiscription'] ?> </h6>
-              </a>
+                <span style="color: #0069c7;">
+                <h6 class="mt-2"> <?php echo limit_text($result['productdiscription'], 8); ?> </h6>
+              </span>
               <div class="bod mt-2">
                   <span style="color: rgb(254, 91, 31);">
                       <h3 class="mt-2">
@@ -431,7 +438,7 @@
                   </span>   
                   <?php echo $result['productdiscount'] ?>
                   <br>
-          <a href="#" class="btn btn-primary mt-3">Buy Now</a>
+          <a href="./login.php" class="btn btn-primary mt-3">Buy Now</a>
          <button type="button" class="btn btn-secondary mt-3 ms-1">Add to Cart</button>
              </div>
            </div>
