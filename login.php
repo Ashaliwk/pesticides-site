@@ -1,3 +1,40 @@
+<?php
+session_start();
+include "conn.php";
+if(isset($_POST["submit"])){
+    $email=   mysqli_real_escape_string($conn, $_POST['loname']);
+    $password=  mysqli_real_escape_string($conn, $_POST['lopass']);
+
+    $select_query = "SELECT * FROM `signup` WHERE `siemail`='$email' AND `sipass`='$password'";
+
+    $result_query = mysqli_query($conn, $select_query);
+    $run_result = mysqli_num_rows($result_query);
+
+    if($run_result > 0){
+        $started_session = mysqli_fetch_assoc($result_query);
+        $_SESSION['bid'] = $started_session['id'];
+        $_SESSION['email'] = $started_session['email'];
+        $_SESSION['password'] = $started_session['password'];
+
+        header('location:categories.php');
+
+    ?>
+    <script>
+        alert("login Successful.");
+    </script>
+    <?php
+   }
+
+   else{
+    ?>
+    <script>
+        alert("Email or password is incorrect.");
+    </script>
+    <?php
+   }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,10 +136,6 @@
             <a class="nav-link active" href="./signup.php">Signup</a>
           </li>
         </ul>
-        <!-- <form class="d-flex ms-lg-5 ps-lg-5">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-light" type="submit">Search</button> -->
-        </form>
       </div>
     </div>
   </nav>
@@ -138,7 +171,7 @@
                   </div>
                     <p>Please login to your account</p>
                     <div class="form-outline mb-4">
-                      <input type="text" class="form-control" name="loname" placeholder="Username" required />
+                      <input type="text" class="form-control" name="loname" placeholder="Enter Your Email" required />
                     </div>
                     <div class="form-outline mb-4">
                       <input type="password" class="form-control" name="lopass" placeholder="Password" required/>

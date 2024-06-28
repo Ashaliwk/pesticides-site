@@ -29,7 +29,7 @@
         }
 
         .navbar-nav a {
-            color: white;
+            color: black;
             text-decoration: none;
         }
 
@@ -135,22 +135,22 @@ else{
 
               <div class="col-lg-4 col-md-10 col-sm-12 col-sm-center">
                 <img class="img-fluid det mt-2 ms-lg-5 ps-lg-5 ms-xl-0" src="./admin lugo.jpg" alt="">
-                <div class="card one  bga"  style="border-color: #0069c7; border-width: 2px;">
+                <div class="card one text-light bga"  style="border-color: #0069c7; border-width: 2px;">
                 <form action="" method="POST">    
                 <div class="card-body">
-                        <div class="form-outline text-light mb-4 pt-3">
+                        <div class="form-outline mb-4 pt-3">
                             <h5>My Email</h5>
                             <input type="text" name="cemail" class="form-control form-control-lg"
                                 placeholder="Your Email" required/>
                         </div>
-                        <div class="form-outline text-light mb-4">
+                        <div class="form-outline mb-4">
                             <h5>My Password</h5>
                             <input type="password" name="cpass" class="form-control form-control-lg"
                                 placeholder="Password" required/>
                         </div>
                         
-                        <div class="bot justify-content-center text-center" >
-                            <button name="submit" type="submit"  class="btn btn-dark btn-lg">Login</button>
+                        <div class="bot text-center">
+                            <button name="submit" type="submit" class="btn btn-dark btn-lg">Login</button>
                         </div> 
                     </div>
                  </form>

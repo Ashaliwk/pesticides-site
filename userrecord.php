@@ -67,20 +67,20 @@
               <h2 class="pe-5"> <?php echo $result['id'] ?> </h2>
             </li>
             <div class="ms-5">
-                   <li> <h3>First Name</h3>
-                    <h5><?php echo $result['fname']?></h5></li>
+                   <li><h4>First Name</h4>
+                    <h3 class="text-primary"><?php echo $result['fname']?></h3></li>
                 </div>
                 <div class="ms-5">
-                    <li><h3>Last Name</h3>
-                    <h5><?php echo $result['lname']?></h5> </li>
+                    <li><h4>Last Name</h4>
+                    <h3 class="text-primary"><?php echo $result['lname']?></h3> </li>
                 </div>
                 <div class="ms-5">
-                   <li> <h3>Enter Your Email</h3>
-                     <h5><?php echo $result['email']?></h5> </li>
+                   <li> <h4>Enter Your Email</h4>
+                     <h3 class="text-primary"><?php echo $result['email']?></h3> </li>
                 </div>
                 <div class="ms-5">
-                  <li>  <h3>Password</h3>
-                  <h5><?php echo $result['password']?></h5> </li>
+                  <li>  <h4>Password</h4>
+                  <h3 class="text-primary"><?php echo $result['password']?></h3> </li>
                 </div>
                 </ul> <hr>
            <?php

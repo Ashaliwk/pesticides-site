@@ -42,11 +42,7 @@
     }
 
     .gradient-custom-3 {
-
-      /* Chrome 10-25, Safari 5.1-6 */
       background: -webkit-linear-gradient(to right, rgba(132, 250, 176, 0.5), rgba(143, 211, 244, 0.5));
-
-      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
       background: white;
     }
 
@@ -97,10 +93,6 @@
             <a class="nav-link active" href="./signup.php">Signup</a>
           </li>
         </ul>
-        <!-- <form class="d-flex ms-lg-5 ps-lg-5">
-          <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-light" type="submit">Search</button>
-        </form> -->
       </div>
     </div>
   </nav>
